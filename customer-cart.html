@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="navPublic">
+    <div class="navInner">
+      <div class="brand"><div class="logoDot">J</div><div>Jazjo Beverage</div></div>
+      <div class="navLinks">
+        <a href="customer-dashboard.html">Home</a>
+        <a href="customer-shop.html">Shop</a>
+        <a href="customer-orders.html">Orders</a>
+        <a href="customer-rewards.html">Rewards</a>
+        <a class="btn back" href="customer-cart.html">Cart (<span data-cart-count>0</span>)</a>
+        <a class="btn" href="index.html">Log Out</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Shopping Cart</h1>
+        <p>Review items, then checkout.</p>
+      </div>
+      <button class="btn back" data-back>← Back</button>
+    </div>
+
+    <div class="grid grid2" style="margin-top:14px">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div style="font-weight:1200;font-size:18px">Cart Items</div>
+          <button class="btn back" id="clearCart">Clear</button>
+        </div>
+        <div class="hr"></div>
+        <div id="cartList"></div>
+      </div>
+
+      <div class="card">
+        <div style="font-weight:1200;font-size:18px">Checkout</div>
+        <div class="small">Payments: QRPH (GCash / Maya / Bank QR) — demo selection only.</div>
+
+        <div class="hr"></div>
+
+        <div class="row" style="justify-content:space-between">
+          <div class="small"><b>Subtotal</b></div><div id="subtotal" style="font-weight:1100">₱ 0</div>
+        </div>
+        <div class="row" style="justify-content:space-between">
+          <div class="small"><b>Delivery Fee</b></div><div id="deliveryFee" style="font-weight:1100">₱ 0</div>
+        </div>
+        <div class="row" style="justify-content:space-between">
+          <div class="small"><b>Total</b></div><div id="total" style="font-weight:1300;font-size:18px">₱ 0</div>
+        </div>
+
+        <div class="hr"></div>
+
+        <form id="checkoutForm" autocomplete="on">
+          <label class="small">Name</label>
+          <input id="shipName" class="input" required placeholder="Full name" />
+
+          <div style="height:10px"></div>
+
+          <label class="small">Contact</label>
+          <input id="shipContact" class="input" required placeholder="09xxxxxxxxx" />
+
+          <div style="height:10px"></div>
+
+          <label class="small">Delivery Address</label>
+          <textarea id="shipAddress" class="input" rows="3" required placeholder="Complete address"></textarea>
+
+          <div style="height:10px"></div>
+
+          <label class="small">Payment Method</label>
+          <select id="paymentMethod" required>
+            <option value="QRPH (GCash)">QRPH (GCash)</option>
+            <option value="QRPH (Maya)">QRPH (Maya)</option>
+            <option value="QRPH (Bank QR)">QRPH (Bank QR)</option>
+            <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+          </select>
+
+          <div style="height:14px"></div>
+
+          <button class="btn" type="submit" style="width:100%">Place Order</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

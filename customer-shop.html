@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="navPublic">
+    <div class="navInner">
+      <div class="brand"><div class="logoDot">J</div><div>Jazjo Beverage</div></div>
+      <div class="navLinks">
+        <a href="customer-dashboard.html">Home</a>
+        <a href="customer-shop.html">Shop</a>
+        <a href="customer-orders.html">Orders</a>
+        <a href="customer-rewards.html">Rewards</a>
+        <a class="btn back" href="customer-cart.html">Cart (<span data-cart-count>0</span>)</a>
+        <a class="btn" href="index.html">Log Out</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Shop</h1>
+        <p>Search products and add to cart.</p>
+      </div>
+      <button class="btn back" data-back>← Back</button>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="grid grid2">
+        <div>
+          <label class="small">Search</label>
+          <input id="search" class="input" placeholder="Search product name or category..." />
+        </div>
+        <div>
+          <label class="small">Category</label>
+          <select id="category"></select>
+        </div>
+      </div>
+    </div>
+
+    <div id="productGrid" class="productGrid" style="margin-top:14px"></div>
+  </div>
+</body>
+</html>

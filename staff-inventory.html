@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory View | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+    .status{padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid rgba(229,231,235,.9)}
+    .ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.28)}
+    .low{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35)}
+    .out{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.28)}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Staff</h2><p>Staff Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="staff-dashboard.html">Dashboard</a>
+        <a href="staff-orders.html">Orders</a>
+        <a class="active" href="staff-inventory.html">Inventory View</a>
+        <a href="staff-delivery.html">Delivery Updates</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Inventory View</h1>
+          <p>Quick stock view: In stock, Low stock, Out of stock.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="filters">
+          <button class="btn2">In Stock</button>
+          <button class="btn2">Low Stock</button>
+          <button class="btn2">Out of Stock</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Stock List (Cases)</h3>
+        <table>
+          <thead><tr><th>Product</th><th>Stock (Cases)</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Cola 1.5L</td><td>25</td><td><span class="status ok">In Stock</span></td></tr>
+            <tr><td>Iced Tea 1L</td><td>7</td><td><span class="status low">Low Stock</span></td></tr>
+            <tr><td>Energy Drink 250ml</td><td>0</td><td><span class="status out">Out of Stock</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

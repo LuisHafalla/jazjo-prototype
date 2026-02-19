@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales Management | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .row{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+    .pilltabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .tab.active{background:rgba(22,163,74,.12);border-color:rgba(22,163,74,.35);color:#0b7a33}
+    .chart{
+      margin-top:12px;border:1px solid rgba(229,231,235,.9);border-radius:18px;padding:14px;background:#fff;
+    }
+    .bars{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:180px;margin-top:10px}
+    .bar{border-radius:14px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.28);position:relative}
+    .bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:12px;font-weight:900;color:#0f172a;margin-bottom:6px;white-space:nowrap}
+    .bar small{position:absolute;top:100%;left:50%;transform:translateX(-50%);font-size:12px;font-weight:800;color:#64748b;margin-top:6px}
+    .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+    .kpi2{border:1px solid rgba(229,231,235,.9);border-radius:18px;padding:14px;background:#fff}
+    .kpi2 .label{color:#64748b;font-weight:900;font-size:12px}
+    .kpi2 .value{margin-top:8px;font-weight:1100;font-size:24px}
+    @media(max-width:900px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Admin</h2><p>Owner Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a class="active" href="admin-sales.html">Sales Management</a>
+        <a href="admin-inventory.html">Inventory Management</a>
+        <a href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-rewards.html">Reward Program</a>
+        <a href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Sales Management</h1>
+          <p>View daily, weekly, monthly performance, best sellers, and transactions.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="pilltabs">
+          <button class="tab active" type="button">Daily</button>
+          <button class="tab" type="button">Weekly</button>
+          <button class="tab" type="button">Monthly</button>
+          <button class="tab" type="button">Best Sellers</button>
+          <button class="tab" type="button">Transactions</button>
+        </div>
+
+        <div class="row">
+          <div class="chart">
+            <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+              <div>
+                <div style="font-weight:1000;font-size:16px;">Sales Trend (Last 7 Days)</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:4px;">Clean UI chart (no libraries)</div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <span style="font-weight:900;color:#64748b;">Filter:</span>
+                <select style="padding:10px 12px;border-radius:999px;border:1px solid rgba(229,231,235,.9);font-weight:900;">
+                  <option>All</option>
+                  <option>Softdrinks</option>
+                  <option>Juice</option>
+                  <option>Water</option>
+                  <option>Tea</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bars">
+              <div class="bar" style="height:40%"><span>₱4.2k</span><small>Mon</small></div>
+              <div class="bar" style="height:62%"><span>₱6.5k</span><small>Tue</small></div>
+              <div class="bar" style="height:55%"><span>₱5.7k</span><small>Wed</small></div>
+              <div class="bar" style="height:80%"><span>₱8.1k</span><small>Thu</small></div>
+              <div class="bar" style="height:70%"><span>₱7.2k</span><small>Fri</small></div>
+              <div class="bar" style="height:90%"><span>₱9.4k</span><small>Sat</small></div>
+              <div class="bar" style="height:65%"><span>₱6.8k</span><small>Sun</small></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="kpis">
+              <div class="kpi2">
+                <div class="label">Today Sales</div>
+                <div class="value">₱ 12,450</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">+8% vs yesterday</div>
+              </div>
+              <div class="kpi2">
+                <div class="label">Transactions</div>
+                <div class="value">18</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">Avg. ₱691/order</div>
+              </div>
+              <div class="kpi2">
+                <div class="label">Best Seller</div>
+                <div class="value">Cola 1.5L</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">42 units sold</div>
+              </div>
+              <div class="kpi2">
+                <div class="label">Refunds</div>
+                <div class="value">₱ 0.00</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">No issues today</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin:18px 0 0;font-weight:1000;">Sales Summary</h3>
+        <table>
+          <thead>
+            <tr><th>Period</th><th>Sales</th><th>Transactions</th><th>Best Seller</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Daily</td><td>₱ 12,450</td><td>18</td><td>Cola 1.5L</td></tr>
+            <tr><td>Weekly</td><td>₱ 68,230</td><td>102</td><td>Iced Tea 1L</td></tr>
+            <tr><td>Monthly</td><td>₱ 255,900</td><td>420</td><td>Water 1L</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

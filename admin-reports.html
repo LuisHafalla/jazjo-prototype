@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Admin</h2><p>Owner Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-sales.html">Sales Management</a>
+        <a href="admin-inventory.html">Inventory Management</a>
+        <a href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-rewards.html">Reward Program</a>
+        <a class="active" href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Reports</h1>
+          <p>Generate sales and inventory reports for monitoring and decision-making.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <button class="btn2">Export PDF</button>
+          <button class="btn2">Export Excel</button>
+          <button class="btn2">Print</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Available Reports</h3>
+        <table>
+          <thead><tr><th>Report Type</th><th>Coverage</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Sales Report</td><td>Daily / Weekly / Monthly</td><td>Available</td></tr>
+            <tr><td>Inventory Report</td><td>In Stock / Low Stock / Out of Stock</td><td>Available</td></tr>
+            <tr><td>Top Selling Products</td><td>By Date Range</td><td>Available</td></tr>
+            <tr><td>Delivery Summary</td><td>Delivered / Pending</td><td>Available</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

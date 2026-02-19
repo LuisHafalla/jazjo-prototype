@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jazjo Beverage | Products</title>
+
+  <style>
+    :root{
+      --green:#16a34a;
+      --greenDark:#0b7a33;
+      --text:#0f172a;
+      --muted:#64748b;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --shadow: 0 12px 30px rgba(15,23,42,.10);
+      --shadow2: 0 10px 22px rgba(15,23,42,.08);
+      --radius2: 22px;
+      --radius: 16px;
+      --navH: 76px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    button,input,select{font-family:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+
+    /* NAV */
+    .nav{
+      position:sticky;top:0;z-index:50;height:var(--navH);
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(229,231,235,.8);
+    }
+    .nav-inner{
+      max-width:1200px;height:100%;
+      margin:0 auto;padding:0 18px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800}
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background:linear-gradient(135deg, var(--green), #22c55e);
+      display:grid;place-items:center;
+      box-shadow: 0 10px 18px rgba(22,163,74,.22);
+      flex:0 0 auto;
+    }
+    .logo svg{width:20px;height:20px;fill:#fff}
+    .nav-links{display:flex;align-items:center;gap:22px;color:#475569;font-weight:600;font-size:14.5px}
+    .nav-links a{padding:10px 6px;border-radius:10px}
+    .nav-links a:hover{background:rgba(15,23,42,.05);color:#111827}
+    .nav-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    .btn{
+      border:0;
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease, background .2s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{background:var(--green);color:#fff;box-shadow: 0 12px 24px rgba(22,163,74,.18)}
+    .btn-primary:hover{filter:brightness(.95)}
+    .btn-ghost{background:rgba(15,23,42,.06);color:#0f172a}
+    .btn-ghost:hover{background:rgba(15,23,42,.10)}
+
+    /* HEADER */
+    .header{
+      padding: 18px 0 6px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing:-.4px;
+      font-weight:900;
+    }
+    .sub{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-weight:600;
+      line-height:1.6;
+    }
+
+    /* TOOLBAR */
+    .toolbar{
+      margin-top:16px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .search{
+      flex:1;
+      min-width:220px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background:#fff;
+      border:1px solid rgba(229,231,235,.95);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow2);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      font-weight:700;
+      color:#0f172a;
+      background:transparent;
+    }
+    .filter{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    select{
+      border:1px solid rgba(229,231,235,.95);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background:#fff;
+      font-weight:800;
+      color:#0f172a;
+      box-shadow: var(--shadow2);
+      outline:none;
+    }
+
+    /* GRID */
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:16px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 360px;
+    }
+    .img{
+      height:170px;
+      background: #eaf7ee;
+      position:relative;
+      overflow:hidden;
+    }
+    .img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .badge{
+      position:absolute;
+      top:12px; left:12px;
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(229,231,235,.9);
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      color:#0f172a;
+      box-shadow: var(--shadow2);
+    }
+    .content{
+      padding:14px 14px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex:1;
+    }
+    .title{
+      font-weight:1000;
+      letter-spacing:-.2px;
+      margin:0;
+      font-size:15px;
+    }
+    .meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12.5px;
+    }
+    .price{
+      font-weight:1000;
+      font-size:16px;
+      letter-spacing:-.2px;
+      margin-top:2px;
+    }
+    .row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .qty{
+      width: 76px;
+      padding:10px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(229,231,235,.95);
+      font-weight:900;
+      outline:none;
+      background:#fff;
+    }
+    .card .btn{width:100%}
+
+    /* UPLOAD AREA */
+    .upload{
+      margin-top:18px;
+      background:#fff;
+      border:1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .upload strong{font-weight:1000}
+    .upload small{color:var(--muted);font-weight:600}
+    input[type="file"]{
+      border:1px solid rgba(229,231,235,.95);
+      padding:10px 12px;
+      border-radius: 14px;
+      background:#fff;
+      font-weight:800;
+      max-width: 320px;
+    }
+
+    /* CART BAR */
+    .cartbar{
+      position: sticky;
+      bottom: 10px;
+      z-index: 20;
+      margin-top: 22px;
+    }
+    .cartinner{
+      max-width:1200px;
+      margin:0 auto;
+      padding: 12px 12px;
+      background: rgba(255,255,255,.92);
+      border:1px solid rgba(229,231,235,.95);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .cartinfo{
+      font-weight:900;
+      color:#0f172a;
+    }
+    .cartinfo span{
+      color:var(--muted);
+      font-weight:800;
+      margin-left:8px;
+    }
+
+    @media (max-width: 1100px){
+      .grid{grid-template-columns: repeat(3, 1fr);}
+    }
+    @media (max-width: 900px){
+      .nav-links{display:none;}
+      .grid{grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 560px){
+      .grid{grid-template-columns: 1fr;}
+      .cartinner{border-radius: 18px;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Zm-7 5.3 6 3V20l-6-3V9.6Zm14 0V17l-6 3v-7.5l6-3Z"/>
+          </svg>
+        </div>
+        <span>Jazjo Beverage</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#about">About Us</a>
+        <a href="products.html">Products</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="btn btn-ghost" href="index.html">Back</a>
+        <a class="btn btn-primary" href="login.html">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="header">
+      <h1>Products</h1>
+      <p class="sub">
+        Browse beverages, add to cart, and proceed to checkout. (Prototype UI)
+      </p>
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        <span style="font-weight:900;color:#94a3b8;">🔎</span>
+        <input id="search" type="text" placeholder="Search products (e.g., cola, lemon, iced tea)..." />
+      </div>
+
+      <div class="filter">
+        <select id="category">
+          <option value="all">All Categories</option>
+          <option value="softdrinks">Softdrinks</option>
+          <option value="juice">Juice</option>
+          <option value="water">Water</option>
+          <option value="tea">Tea</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Upload (Admin/Staff can use this later; for now it's demo-ready) -->
+    <div class="upload">
+      <div>
+        <strong>Upload a Product Image (JPG/PNG)</strong><br />
+        <small>Select a product card below, then upload an image to replace its picture.</small>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span style="font-weight:900;color:var(--muted)">Selected:</span>
+        <span id="selectedName" style="font-weight:1000;">None</span>
+        <input id="imgUpload" type="file" accept=".jpg,.jpeg,.png" />
+        <button class="btn btn-ghost" id="clearImg" type="button">Clear Image</button>
+      </div>
+    </div>
+
+    <section class="grid" id="grid"></section>
+  </main>
+
+  <!-- CART BAR -->
+  <div class="cartbar">
+    <div class="cartinner">
+      <div class="cartinfo">
+        Cart: <span id="cartCount">0 items</span> • <span id="cartTotal">₱ 0.00</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" id="clearCart" type="button">Clear Cart</button>
+        <button class="btn btn-primary" id="checkout" type="button">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple products list (you can edit these anytime)
+    const products = [
+      { id: 1, name: "Cola 1.5L", category: "softdrinks", price: 75, stock: "In Stock", img: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=1200&q=70" },
+      { id: 2, name: "Lemon-Lime Soda 1.5L", category: "softdrinks", price: 78, stock: "In Stock", img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1200&q=70" },
+      { id: 3, name: "Orange Juice 1L", category: "juice", price: 95, stock: "Low Stock", img: "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=1200&q=70" },
+      { id: 4, name: "Iced Tea 1L", category: "tea", price: 88, stock: "In Stock", img: "https://images.unsplash.com/photo-1542444459-db47a7f8c509?auto=format&fit=crop&w=1200&q=70" },
+      { id: 5, name: "Bottled Water 1L", category: "water", price: 25, stock: "In Stock", img: "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=1200&q=70" },
+      { id: 6, name: "Energy Drink 250ml", category: "softdrinks", price: 55, stock: "Out of Stock", img: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?auto=format&fit=crop&w=1200&q=70" },
+      { id: 7, name: "Grape Juice 1L", category: "juice", price: 99, stock: "In Stock", img: "https://images.unsplash.com/photo-1553530666-ba11a90a0868?auto=format&fit=crop&w=1200&q=70" },
+      { id: 8, name: "Sparkling Water 500ml", category: "water", price: 35, stock: "In Stock", img: "https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?auto=format&fit=crop&w=1200&q=70" },
+    ];
+
+    const grid = document.getElementById("grid");
+    const search = document.getElementById("search");
+    const category = document.getElementById("category");
+
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+    const clearCartBtn = document.getElementById("clearCart");
+    const checkoutBtn = document.getElementById("checkout");
+
+    const imgUpload = document.getElementById("imgUpload");
+    const selectedName = document.getElementById("selectedName");
+    const clearImg = document.getElementById("clearImg");
+
+    let selectedProductId = null;
+    let cart = []; // {id, name, price, qty}
+
+    function money(n){ return "₱ " + n.toFixed(2); }
+
+    function render(){
+      const q = (search.value || "").toLowerCase().trim();
+      const cat = category.value;
+
+      const filtered = products.filter(p => {
+        const matchText = p.name.toLowerCase().includes(q);
+        const matchCat = (cat === "all") || (p.category === cat);
+        return matchText && matchCat;
+      });
+
+      grid.innerHTML = filtered.map(p => `
+        <article class="card" data-id="${p.id}">
+          <div class="img">
+            <img src="${p.img}" alt="${p.name}">
+            <div class="badge">${p.stock}</div>
+          </div>
+          <div class="content">
+            <h3 class="title">${p.name}</h3>
+            <div class="meta">
+              <span>${p.category.toUpperCase()}</span>
+              <span class="price">${money(p.price)}</span>
+            </div>
+            <div class="row">
+              <input class="qty" type="number" min="1" value="1" />
+              <button class="btn btn-primary add">Add to Cart</button>
+              <button class="btn btn-ghost select">Select</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      // bind buttons
+      grid.querySelectorAll(".card").forEach(card => {
+        const id = Number(card.dataset.id);
+        const product = products.find(x => x.id === id);
+
+        const qtyInput = card.querySelector(".qty");
+        const addBtn = card.querySelector(".add");
+        const selBtn = card.querySelector(".select");
+
+        addBtn.addEventListener("click", () => {
+          if (product.stock === "Out of Stock") {
+            alert("Sorry, this product is out of stock.");
+            return;
+          }
+          const qty = Math.max(1, Number(qtyInput.value || 1));
+          addToCart(product, qty);
+        });
+
+        selBtn.addEventListener("click", () => {
+          selectedProductId = id;
+          selectedName.textContent = product.name;
+          // small visual cue
+          grid.querySelectorAll(".card").forEach(c => c.style.outline = "none");
+          card.style.outline = "3px solid rgba(22,163,74,.35)";
+        });
+
+        // click image selects too
+        card.querySelector(".img").addEventListener("click", () => {
+          selectedProductId = id;
+          selectedName.textContent = product.name;
+          grid.querySelectorAll(".card").forEach(c => c.style.outline = "none");
+          card.style.outline = "3px solid rgba(22,163,74,.35)";
+        });
+      });
+    }
+
+    function addToCart(product, qty){
+      const existing = cart.find(i => i.id === product.id);
+      if (existing) existing.qty += qty;
+      else cart.push({ id: product.id, name: product.name, price: product.price, qty });
+      updateCartBar();
+    }
+
+    function updateCartBar(){
+      const count = cart.reduce((s,i)=>s+i.qty,0);
+      const total = cart.reduce((s,i)=>s+(i.qty*i.price),0);
+      cartCount.textContent = `${count} item${count!==1?"s":""}`;
+      cartTotal.textContent = money(total);
+    }
+
+    search.addEventListener("input", render);
+    category.addEventListener("change", render);
+
+    clearCartBtn.addEventListener("click", () => {
+      cart = [];
+      updateCartBar();
+    });
+
+    checkoutBtn.addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+      alert("Checkout page is next. We can build checkout.html with Delivery Info + QRPH payment (GCash/QRPH).");
+    });
+
+    // Image upload (PNG/JPG)
+    imgUpload.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      if (!selectedProductId) {
+        alert("Please select a product card first (click Select).");
+        imgUpload.value = "";
+        return;
+      }
+
+      const ok = ["image/png","image/jpeg","image/jpg"].includes(file.type);
+      if (!ok) {
+        alert("Please upload PNG or JPG only.");
+        imgUpload.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const p = products.find(x => x.id === selectedProductId);
+        if (p) p.img = reader.result;
+        render();
+        imgUpload.value = "";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    clearImg.addEventListener("click", () => {
+      if (!selectedProductId) {
+        alert("Select a product first.");
+        return;
+      }
+      const p = products.find(x => x.id === selectedProductId);
+      if (!p) return;
+
+      // fallback image
+      p.img = "https://images.unsplash.com/photo-1519861155730-0b5fbf0dd889?auto=format&fit=crop&w=1200&q=70";
+      render();
+    });
+
+    render();
+    updateCartBar();
+  </script>
+</body>
+</html>

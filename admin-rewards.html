@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reward Program | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .greenCard{
+      background:#047857;
+      color:#fff;
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .progress{
+      margin-top:14px;height:12px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden
+    }
+    .progress div{height:100%;width:82%;background:#fff;border-radius:999px}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+    .rewardBox{border:1px solid rgba(229,231,235,.9);border-radius:22px;background:#fff;padding:16px}
+    .rewardBox h3{margin:0;font-weight:1000}
+    .rewardBox p{margin:8px 0 0;color:#64748b;font-weight:650;line-height:1.6}
+    .redeem{
+      margin-top:14px;width:100%;
+      padding:12px;border-radius:14px;border:0;cursor:pointer;
+      background:#047857;color:#fff;font-weight:1000
+    }
+    .redeem:hover{filter:brightness(.95)}
+    @media(max-width:900px){.two{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Admin</h2><p>Owner Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-sales.html">Sales Management</a>
+        <a href="admin-inventory.html">Inventory Management</a>
+        <a href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a class="active" href="admin-rewards.html">Reward Program</a>
+        <a href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Reward Program</h1>
+          <p>Configure points, rewards, and redemption settings.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="greenCard">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;">
+            <div>
+              <div style="font-weight:1000;font-size:20px;">Loyalty Rewards</div>
+              <div style="opacity:.9;font-weight:650;margin-top:4px;">Your current balance (sample)</div>
+              <div style="font-size:54px;font-weight:1200;margin-top:10px;letter-spacing:-1px;">1,250</div>
+              <div style="opacity:.9;font-weight:800;margin-top:-6px;">points</div>
+            </div>
+            <div style="font-size:38px;">🎁</div>
+          </div>
+
+          <div style="margin-top:12px;opacity:.9;font-weight:800;">Next reward at 1,500 points</div>
+          <div class="progress"><div></div></div>
+        </div>
+
+        <div class="two">
+          <div class="rewardBox">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div style="font-size:28px;">⭐</div>
+              <div>
+                <h3>Free Delivery</h3>
+                <div style="color:#64748b;font-weight:900;margin-top:2px;">500 points</div>
+              </div>
+            </div>
+            <p>Get free delivery on your next order.</p>
+            <button class="redeem">Redeem</button>
+          </div>
+
+          <div class="rewardBox">
+            <div style="display:flex;gap:10px;align-items:center;">
+              <div style="font-size:28px;">🎁</div>
+              <div>
+                <h3>10% Discount</h3>
+                <div style="color:#64748b;font-weight:900;margin-top:2px;">1,000 points</div>
+              </div>
+            </div>
+            <p>Get 10% off on your next purchase.</p>
+            <button class="redeem">Redeem</button>
+          </div>
+        </div>
+
+        <div class="rewardBox" style="margin-top:14px;">
+          <h3>How to Earn Points</h3>
+          <table>
+            <thead><tr><th>Action</th><th>Points</th></tr></thead>
+            <tbody>
+              <tr><td>Every ₱100 spent</td><td>+10 points</td></tr>
+              <tr><td>Complete order</td><td>+25 points</td></tr>
+              <tr><td>Refer a friend</td><td>+100 points</td></tr>
+              <tr><td>Birthday bonus</td><td>+200 points</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

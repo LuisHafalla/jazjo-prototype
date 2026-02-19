@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Dashboard | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+    .kpi{background:#fff;border:1px solid rgba(229,231,235,.9);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+    .kpi .label{color:#64748b;font-weight:900;font-size:12px}
+    .kpi .value{margin-top:8px;font-weight:1100;font-size:22px}
+    .grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+    .chipRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .chip{padding:10px 12px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900}
+    .barBox{border:1px solid rgba(229,231,235,.9);border-radius:18px;background:#fff;padding:14px}
+    .bars{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end;height:140px;margin-top:10px}
+    .bar{border-radius:14px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.28);position:relative}
+    .bar small{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;font-weight:900;color:#64748b;font-size:12px}
+    @media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){.grid2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Staff</h2><p>Staff Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="staff-dashboard.html">Dashboard</a>
+        <a href="staff-orders.html">Orders</a>
+        <a href="staff-inventory.html">Inventory View</a>
+        <a href="staff-delivery.html">Delivery Updates</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Overview of orders to prepare, deliver, completed, and pending.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="label">Orders to Prepare</div>
+          <div class="value">6</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Orders to Deliver</div>
+          <div class="value">3</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Completed Orders</div>
+          <div class="value">12</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Pending Orders</div>
+          <div class="value">5</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="chipRow">
+          <span class="chip">Today</span>
+          <span class="chip">This Week</span>
+          <span class="chip">All Status</span>
+        </div>
+
+        <div class="grid2">
+          <div class="barBox">
+            <div style="font-weight:1000;font-size:16px;">Order Volume (5 Days)</div>
+            <div style="color:#64748b;font-weight:650;margin-top:4px;">Simple chart UI (no libraries)</div>
+            <div class="bars">
+              <div class="bar" style="height:40%"><small>Mon</small></div>
+              <div class="bar" style="height:65%"><small>Tue</small></div>
+              <div class="bar" style="height:55%"><small>Wed</small></div>
+              <div class="bar" style="height:80%"><small>Thu</small></div>
+              <div class="bar" style="height:60%"><small>Fri</small></div>
+            </div>
+          </div>
+
+          <div class="barBox">
+            <div style="font-weight:1000;font-size:16px;">Quick Links</div>
+            <div style="color:#64748b;font-weight:650;margin-top:6px;line-height:1.6">
+              Use these buttons during demo so navigation is easy.
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <a class="btn" href="staff-orders.html" style="text-decoration:none">Go to Orders</a>
+              <a class="btn" href="staff-delivery.html" style="text-decoration:none">Go to Delivery Updates</a>
+              <a class="btn" href="staff-inventory.html" style="text-decoration:none;background:#0f172a">Check Inventory</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

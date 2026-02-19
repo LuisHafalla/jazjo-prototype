@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Management | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .toprow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .search{flex:1;min-width:220px;padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);font-weight:900}
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+    .forecast{
+      margin-top:14px;border:1px solid rgba(229,231,235,.9);border-radius:22px;background:#fff;padding:14px;
+      display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    }
+    .box{
+      border:1px solid rgba(229,231,235,.9);border-radius:18px;padding:14px;background:#fff;
+    }
+    .miniBars{display:flex;gap:8px;align-items:flex-end;height:120px;margin-top:10px}
+    .miniBars div{width:18%;border-radius:12px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.28)}
+    @media(max-width:900px){.forecast{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Admin</h2><p>Owner Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-sales.html">Sales Management</a>
+        <a class="active" href="admin-inventory.html">Inventory Management</a>
+        <a href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-rewards.html">Reward Program</a>
+        <a href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Inventory Management</h1>
+          <p>Monitor product inventory (cases/bundles) and forecasting summary.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="toprow">
+          <input class="search" placeholder="Search product..." />
+          <button class="btn2" type="button">+ Add Product</button>
+          <button class="btn2" type="button">Restock</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Product Inventory (Cases)</h3>
+        <table>
+          <thead>
+            <tr><th>Product</th><th>Stock (Cases)</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cola 1.5L</td><td>25</td><td>In Stock</td><td><button class="btn2">Edit</button></td></tr>
+            <tr><td>Orange Juice 1L</td><td>5</td><td>Low Stock</td><td><button class="btn2">Edit</button></td></tr>
+            <tr><td>Energy Drink 250ml</td><td>0</td><td>Out of Stock</td><td><button class="btn2">Edit</button></td></tr>
+          </tbody>
+        </table>
+
+        <div class="forecast">
+          <div class="box">
+            <div style="font-weight:1000;font-size:16px;">Forecast Summary</div>
+            <div style="color:#64748b;font-weight:650;margin-top:6px;">
+              Forecast helps estimate stock needs based on past sales trends.
+            </div>
+            <div class="miniBars">
+              <div style="height:35%"></div>
+              <div style="height:55%"></div>
+              <div style="height:45%"></div>
+              <div style="height:70%"></div>
+              <div style="height:60%"></div>
+            </div>
+            <div style="color:#64748b;font-weight:800;font-size:12px;margin-top:8px;">
+              Sample: next 5 days demand estimate
+            </div>
+          </div>
+
+          <div class="box">
+            <div style="font-weight:1000;font-size:16px;">Low Stock Alerts</div>
+            <div style="color:#64748b;font-weight:650;margin-top:6px;">
+              Products that need restocking soon.
+            </div>
+            <table>
+              <thead><tr><th>Product</th><th>Stock</th></tr></thead>
+              <tbody>
+                <tr><td>Orange Juice 1L</td><td>5 cases</td></tr>
+                <tr><td>Iced Tea 1L</td><td>7 cases</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

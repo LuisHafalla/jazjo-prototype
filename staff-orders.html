@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Orders | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid rgba(229,231,235,.9)}
+    .p{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35)}
+    .prep{background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.28)}
+    .transit{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.28)}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Staff</h2><p>Staff Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="staff-dashboard.html">Dashboard</a>
+        <a class="active" href="staff-orders.html">Orders</a>
+        <a href="staff-inventory.html">Inventory View</a>
+        <a href="staff-delivery.html">Delivery Updates</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Orders</h1>
+          <p>View orders to prepare and orders to deliver.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="filters">
+          <button class="btn2">Orders to Prepare</button>
+          <button class="btn2">Orders to Deliver</button>
+          <button class="btn2">Completed Orders</button>
+          <button class="btn2">Pending Orders</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Order List</h3>
+        <table>
+          <thead>
+            <tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ORD-2026-008</td><td>Maria Santos</td><td>₱ 980</td>
+              <td><span class="tag p">Pending</span></td>
+              <td><button class="btn2">Mark Preparing</button></td>
+            </tr>
+            <tr>
+              <td>ORD-2026-009</td><td>Juan Dela Cruz</td><td>₱ 1,250</td>
+              <td><span class="tag prep">Preparing</span></td>
+              <td><button class="btn2">Mark In Transit</button></td>
+            </tr>
+            <tr>
+              <td>ORD-2026-010</td><td>Ana Reyes</td><td>₱ 650</td>
+              <td><span class="tag transit">In Transit</span></td>
+              <td><button class="btn2">Mark Delivered</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:12px;color:#64748b;font-weight:700;line-height:1.6">
+          Note: Status updates here are for the demo flow. Later, this will be connected to real data.
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

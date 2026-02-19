@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rewards | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="navPublic">
+    <div class="navInner">
+      <div class="brand"><div class="logoDot">J</div><div>Jazjo Beverage</div></div>
+      <div class="navLinks">
+        <a href="customer-dashboard.html">Home</a>
+        <a href="customer-shop.html">Shop</a>
+        <a href="customer-orders.html">Orders</a>
+        <a href="customer-rewards.html">Rewards</a>
+        <a class="btn back" href="customer-cart.html">Cart (<span data-cart-count>0</span>)</a>
+        <a class="btn" href="index.html">Log Out</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Rewards</h1>
+        <p>Earn points and redeem rewards (demo).</p>
+      </div>
+      <button class="btn back" data-back>← Back</button>
+    </div>
+
+    <div id="rewardHero" class="rewardHero" style="margin-top:14px">
+      <div class="rewardHeroTop">
+        <div>
+          <h2>Loyalty Rewards</h2>
+          <div class="small" style="color:rgba(255,255,255,.88)">Your current balance</div>
+          <div class="rewardPoints"><span id="points">0</span></div>
+          <div class="small" style="color:rgba(255,255,255,.88)">points</div>
+        </div>
+        <div style="font-size:36px">🎁</div>
+      </div>
+
+      <div class="hr" style="background:rgba(255,255,255,.18)"></div>
+
+      <div class="small" style="color:rgba(255,255,255,.88)" id="nextText">Next reward at 1,500 points</div>
+      <div class="progress"><div id="barFill"></div></div>
+    </div>
+
+    <div class="rewardGrid">
+      <div class="redeemCard">
+        <div class="redeemTop">
+          <div class="redeemIcon">⭐</div>
+          <div>
+            <p class="redeemTitle">Free Delivery</p>
+            <p class="redeemPts">500 points</p>
+          </div>
+        </div>
+        <p class="redeemDesc">Get free delivery on your next order.</p>
+        <button class="btn" data-redeem data-cost="500">Redeem</button>
+      </div>
+
+      <div class="redeemCard">
+        <div class="redeemTop">
+          <div class="redeemIcon" style="background:rgba(59,130,246,.14);border-color:rgba(59,130,246,.28)">🎁</div>
+          <div>
+            <p class="redeemTitle">10% Discount</p>
+            <p class="redeemPts">1,000 points</p>
+          </div>
+        </div>
+        <p class="redeemDesc">Get 10% off on your next purchase.</p>
+        <button class="btn" data-redeem data-cost="1000">Redeem</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div style="font-weight:1200;font-size:18px">How to Earn Points</div>
+      <div class="hr"></div>
+
+      <div class="row" style="justify-content:space-between">
+        <div class="small">Every ₱100 spent</div>
+        <div class="small" style="font-weight:1200;color:#16a34a">+10 points</div>
+      </div>
+      <div class="row" style="justify-content:space-between">
+        <div class="small">Complete order</div>
+        <div class="small" style="font-weight:1200;color:#16a34a">+25 points</div>
+      </div>
+      <div class="row" style="justify-content:space-between">
+        <div class="small">Refer a friend</div>
+        <div class="small" style="font-weight:1200;color:#16a34a">+100 points</div>
+      </div>
+      <div class="row" style="justify-content:space-between">
+        <div class="small">Birthday bonus</div>
+        <div class="small" style="font-weight:1200;color:#16a34a">+200 points</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

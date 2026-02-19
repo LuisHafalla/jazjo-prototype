@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="navPublic">
+    <div class="navInner">
+      <div class="brand"><div class="logoDot">J</div><div>Jazjo Beverage</div></div>
+      <div class="navLinks">
+        <a href="customer-dashboard.html">Home</a>
+        <a href="customer-shop.html">Shop</a>
+        <a href="customer-orders.html">Orders</a>
+        <a href="customer-rewards.html">Rewards</a>
+        <a class="btn back" href="customer-cart.html">Cart (<span data-cart-count>0</span>)</a>
+        <a class="btn" href="index.html">Log Out</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Profile</h1>
+        <p>Account information (demo).</p>
+      </div>
+      <button class="btn back" data-back>← Back</button>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <form id="profileForm" class="grid grid2">
+        <div>
+          <label class="small">Name</label>
+          <input id="pname" class="input" required />
+        </div>
+        <div>
+          <label class="small">Email</label>
+          <input id="pemail" class="input" required />
+        </div>
+        <div>
+          <label class="small">Contact</label>
+          <input id="pcontact" class="input" required />
+        </div>
+        <div>
+          <label class="small">Address</label>
+          <input id="paddress" class="input" placeholder="Optional" />
+        </div>
+
+        <div style="grid-column:1/-1">
+          <button class="btn" type="submit">Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Management | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div><h2>Jazjo Admin</h2><p>Owner Panel</p></div>
+      </div>
+
+      <nav class="nav">
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-sales.html">Sales Management</a>
+        <a href="admin-inventory.html">Inventory Management</a>
+        <a class="active" href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-rewards.html">Reward Program</a>
+        <a href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Order Management</h1>
+          <p>Monitor and update customer orders from placed to delivered.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <div class="actions">
+          <button class="btn2">Pending</button>
+          <button class="btn2">Preparing</button>
+          <button class="btn2">In Transit</button>
+          <button class="btn2">Delivered</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Orders List</h3>
+        <table>
+          <thead>
+            <tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Total</th><th>Status</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ORD-2026-002</td><td>Feb 2, 2026</td><td>Juan Dela Cruz</td><td>₱ 1,250</td><td>Preparing</td>
+              <td><button class="btn2">View Details</button></td>
+            </tr>
+            <tr>
+              <td>ORD-2026-003</td><td>Feb 3, 2026</td><td>Maria Santos</td><td>₱ 980</td><td>In Transit</td>
+              <td><button class="btn2">View Details</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

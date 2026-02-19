@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Jazjo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Z"/></svg>
+        </div>
+        <div>
+          <h2>Jazjo Admin</h2>
+          <p>Owner Panel</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="admin-dashboard.html">Dashboard</a>
+        <a href="admin-sales.html">Sales Management</a>
+        <a href="admin-inventory.html">Inventory Management</a>
+        <a href="admin-orders.html">Order Management</a>
+        <a href="admin-delivery.html">Delivery Tracking</a>
+        <a href="admin-customers.html">Customers</a>
+        <a href="admin-rewards.html">Reward Program</a>
+        <a href="admin-reports.html">Reports</a>
+        <a href="index.html">Log Out</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Sales, orders, stocks, and deliveries overview.</p>
+        </div>
+        <button class="btn back" onclick="history.back()">← Back</button>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0;font-weight:1000;">Recent Orders</h3>
+        <table>
+          <thead>
+            <tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ORD-2026-002</td><td>Juan Dela Cruz</td><td>₱ 1,250</td><td>Preparing</td></tr>
+            <tr><td>ORD-2026-003</td><td>Maria Santos</td><td>₱ 980</td><td>In Transit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jazjo Beverage | Login</title>
+
+  <style>
+    :root{
+      --green:#16a34a;
+      --greenDark:#0b7a33;
+      --text:#0f172a;
+      --muted:#64748b;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --shadow: 0 12px 30px rgba(15,23,42,.10);
+      --shadow2: 0 10px 22px rgba(15,23,42,.08);
+      --radius: 18px;
+      --radius2: 22px;
+      --navH: 76px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    button,input{font-family:inherit}
+
+    /* NAV */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      height:var(--navH);
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(229,231,235,.8);
+    }
+    .nav-inner{
+      max-width:1200px;
+      height:100%;
+      margin:0 auto;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background:linear-gradient(135deg, var(--green), #22c55e);
+      display:grid;place-items:center;
+      box-shadow: 0 10px 18px rgba(22,163,74,.22);
+      flex:0 0 auto;
+    }
+    .logo svg{width:20px;height:20px;fill:#fff}
+    .brand span{font-size:18px}
+
+    .nav-links{
+      display:flex;align-items:center;gap:22px;
+      color:#475569;font-weight:600;font-size:14.5px;
+    }
+    .nav-links a{padding:10px 6px;border-radius:10px}
+    .nav-links a:hover{background:rgba(15,23,42,.05);color:#111827}
+
+    .btn{
+      border:0;
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease, background .2s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{background:var(--green);color:#fff;box-shadow:0 12px 24px rgba(22,163,74,.18)}
+    .btn-primary:hover{filter:brightness(.95)}
+    .btn-ghost{background:rgba(15,23,42,.06);color:#0f172a}
+    .btn-ghost:hover{background:rgba(15,23,42,.10)}
+
+    /* PAGE */
+    .page{
+      min-height: calc(100vh - var(--navH));
+      display:grid;
+      place-items:center;
+      padding: 26px 18px 60px;
+    }
+    .card{
+      width:min(980px, 100%);
+      background:var(--card);
+      border:1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+    }
+    .left{
+      padding: 34px 30px;
+      background:
+        linear-gradient(90deg, rgba(2,6,23,.65) 0%, rgba(2,6,23,.25) 100%),
+        url("https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=2000&q=70");
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:22px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      font-weight:700;
+      font-size:13px;
+      width:max-content;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:#22c55e;
+      box-shadow:0 0 0 6px rgba(34,197,94,.18);
+    }
+    .left h1{
+      margin:0;
+      font-size: clamp(30px, 3.2vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+      font-weight:900;
+    }
+    .left p{
+      margin:10px 0 0;
+      color:rgba(255,255,255,.88);
+      line-height:1.7;
+      font-weight:600;
+      max-width: 440px;
+    }
+    .left .small{
+      color:rgba(255,255,255,.78);
+      font-weight:600;
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .right{
+      padding: 34px 30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:14px;
+    }
+    .right h2{
+      margin:0;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.2px;
+    }
+    .right .sub{
+      margin:0 0 8px;
+      color:var(--muted);
+      font-weight:600;
+      line-height:1.6;
+      font-size:14.5px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      margin-top:10px;
+    }
+    label{
+      font-size:13px;
+      font-weight:800;
+      color:#111827;
+    }
+    .input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(229,231,235,.95);
+      outline:none;
+      background:#fff;
+      font-weight:700;
+      color:#0f172a;
+    }
+    .input:focus{
+      border-color: rgba(22,163,74,.55);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.15);
+    }
+
+    .pw-wrap{position:relative}
+    .toggle{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      border:0;
+      background:rgba(15,23,42,.06);
+      color:#0f172a;
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:12px;
+    }
+
+    .row{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+    .row a{color:var(--greenDark)}
+    .row a:hover{text-decoration:underline}
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .msg{
+      margin-top:10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(239,68,68,.25);
+      background: rgba(239,68,68,.08);
+      color:#991b1b;
+      font-weight:700;
+      display:none;
+    }
+
+    .back{
+      margin-top:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      color:#0f172a;
+      width:max-content;
+    }
+    .back:hover{text-decoration:underline}
+
+    @media (max-width: 920px){
+      .nav-links{display:none}
+      .card{grid-template-columns: 1fr;}
+      .left{min-height: 260px;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Jazjo Beverage Home">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Zm-7 5.3 6 3V20l-6-3V9.6Zm14 0V17l-6 3v-7.5l6-3Z"/>
+          </svg>
+        </div>
+        <span>Jazjo Beverage</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#about">About Us</a>
+        <a href="index.html#products">Products</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn-ghost" href="index.html">Back</a>
+    </div>
+  </header>
+
+  <!-- PAGE -->
+  <main class="page">
+    <div class="card">
+      <section class="left">
+        <div>
+          <div class="tag"><span class="dot"></span> Secure Login</div>
+          <h1>Welcome back to Jazjo</h1>
+          <p>
+            Log in to manage orders, track deliveries, and monitor inventory.
+            Your role is detected automatically based on your account.
+          </p>
+        </div>
+        <div class="small">
+          Delivery tracking is status-based only (no GPS): Order Placed → Preparing → In Transit → Out for Delivery → Delivered.
+        </div>
+      </section>
+
+      <section class="right">
+        <h2>Login</h2>
+        <p class="sub">Enter your email and password to continue.</p>
+
+        <form id="loginForm" autocomplete="on">
+          <div class="field">
+            <label for="email">Email</label>
+            <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="pw-wrap">
+              <input class="input" id="password" name="password" type="password" placeholder="Enter your password" required />
+              <button class="toggle" type="button" id="togglePw">Show</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="remember" />
+              Remember me
+            </label>
+            <a href="#" onclick="return false;" title="Not included in prototype">Forgot password?</a>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Continue</button>
+            <a class="btn btn-ghost" href="index.html">Cancel</a>
+          </div>
+
+          <div class="msg" id="msg"></div>
+
+          <a class="back" href="index.html">← Back to Home</a>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // NOTE (for developers only): demo accounts (do NOT show on page)
+    // Admin:    admin@jazjo.com / Admin404!
+    // Staff:    staff@jazjo.com / Staff404!
+    // Customer: customer@jazjo.com / Customer404!
+
+    const accounts = [
+      { email: "admin@jazjo.com",    pass: "Admin404!",    redirect: "admin-dashboard.html" },
+      { email: "staff@jazjo.com",    pass: "Staff404!",    redirect: "staff-dashboard.html" },
+      { email: "customer@jazjo.com", pass: "Customer404!", redirect: "customer-dashboard.html" },
+    ];
+
+    const msg = document.getElementById("msg");
+    const form = document.getElementById("loginForm");
+    const togglePw = document.getElementById("togglePw");
+    const pwInput = document.getElementById("password");
+
+    togglePw.addEventListener("click", () => {
+      const isPw = pwInput.type === "password";
+      pwInput.type = isPw ? "text" : "password";
+      togglePw.textContent = isPw ? "Hide" : "Show";
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      msg.style.display = "none";
+      msg.textContent = "";
+
+      const email = (document.getElementById("email").value || "").trim().toLowerCase();
+      const pass = document.getElementById("password").value || "";
+
+      const found = accounts.find(a => a.email === email && a.pass === pass);
+
+      if (!found) {
+        msg.style.display = "block";
+        msg.textContent = "Incorrect email or password. Please try again.";
+        return;
+      }
+
+      // Basic "remember" for demo
+      const remember = document.getElementById("remember").checked;
+      if (remember) {
+        localStorage.setItem("jazjo_user", email);
+      } else {
+        localStorage.removeItem("jazjo_user");
+      }
+
+      window.location.href = found.redirect;
+    });
+
+    // Prefill email if remembered
+    const saved = localStorage.getItem("jazjo_user");
+    if (saved) document.getElementById("email").value = saved;
+  </script>
+</body>
+</html>
