@@ -355,21 +355,21 @@
   </main>
 
   <script>
-    // NOTE (for developers only): demo accounts (do NOT show on page)
-    // Admin:    admin@jazjo.com / Admin404!
-    // Staff:    staff@jazjo.com / Staff404!
-    // Customer: customer@jazjo.com / Customer404!
-
-    const accounts = [
-      { email: "admin@jazjo.com",    pass: "Admin404!",    redirect: "admin-dashboard.html" },
-      { email: "staff@jazjo.com",    pass: "Staff404!",    redirect: "staff-dashboard.html" },
-      { email: "customer@jazjo.com", pass: "Customer404!", redirect: "customer-dashboard.html" },
-    ];
-
     const msg = document.getElementById("msg");
     const form = document.getElementById("loginForm");
     const togglePw = document.getElementById("togglePw");
     const pwInput = document.getElementById("password");
+
+    function showError(text) {
+      msg.style.display = "block";
+      msg.textContent = text;
+    }
+
+    function routeByRole(role) {
+      if (role === "admin") return "admin/admin-dashboard.html";
+      if (role === "staff") return "staff/staff-dashboard.html";
+      return "customer/customer-dashboard.html";
+    }
 
     togglePw.addEventListener("click", () => {
       const isPw = pwInput.type === "password";
@@ -377,7 +377,7 @@
       togglePw.textContent = isPw ? "Hide" : "Show";
     });
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       msg.style.display = "none";
       msg.textContent = "";
@@ -385,23 +385,33 @@
       const email = (document.getElementById("email").value || "").trim().toLowerCase();
       const pass = document.getElementById("password").value || "";
 
-      const found = accounts.find(a => a.email === email && a.pass === pass);
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password: pass })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showError(data.error || "Incorrect email or password. Please try again.");
+          return;
+        }
 
-      if (!found) {
-        msg.style.display = "block";
-        msg.textContent = "Incorrect email or password. Please try again.";
-        return;
+        const remember = document.getElementById("remember").checked;
+        localStorage.setItem("jazjo_user", data.user.email);
+        localStorage.setItem("jazjo_role", data.user.role || "customer");
+        if (data.session?.access_token) {
+          sessionStorage.setItem("jazjo_access_token", data.session.access_token);
+          if (remember) localStorage.setItem("jazjo_access_token", data.session.access_token);
+        }
+        if (!remember) {
+          localStorage.removeItem("jazjo_access_token");
+        }
+
+        window.location.href = routeByRole(data.user.role);
+      } catch (err) {
+        showError(`Login failed: ${err.message}`);
       }
-
-      // Basic "remember" for demo
-      const remember = document.getElementById("remember").checked;
-      if (remember) {
-        localStorage.setItem("jazjo_user", email);
-      } else {
-        localStorage.removeItem("jazjo_user");
-      }
-
-      window.location.href = found.redirect;
     });
 
     // Prefill email if remembered

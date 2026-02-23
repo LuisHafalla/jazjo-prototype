@@ -9,4 +9,4 @@
 - Role is hidden (no role selection page)
 - Delivery tracking is status updates only (not GPS)
 - Inventory uses bundles/cases concept
-- This is a clickable prototype (front-end only)
+- This is a clickable prototype (front-end only). Entry page: `public/index.html`

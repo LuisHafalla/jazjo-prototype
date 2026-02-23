@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Delivery Tracking | Jazjo</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <style>
     .timeline{margin-top:14px;border:1px solid rgba(229,231,235,.9);border-radius:22px;background:#fff;padding:16px}
     .trackHead{display:flex;align-items:center;gap:12px}
@@ -46,7 +46,7 @@
         <a href="admin-customers.html">Customers</a>
         <a href="admin-rewards.html">Reward Program</a>
         <a href="admin-reports.html">Reports</a>
-        <a href="index.html">Log Out</a>
+        <a href="../index.html">Log Out</a>
       </nav>
     </aside>
 
@@ -60,66 +60,9 @@
       </div>
 
       <div class="card">
-        <div class="timeline">
-          <div class="trackHead">
-            <div class="icon">🚚</div>
-            <div>
-              <div style="font-weight:1100;font-size:18px;">Active Delivery</div>
-              <div style="color:#64748b;font-weight:800;margin-top:4px;">Order #ORD-2026-002</div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div>
-              <div class="dot done">✓</div>
-              <div class="line" style="height:70px"></div>
-            </div>
-            <div class="info">
-              <h4>Order Confirmed</h4>
-              <div class="meta">Feb 2, 2026 • 9:30 AM</div>
-              <p>Your order has been confirmed and is being prepared.</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div>
-              <div class="dot done">✓</div>
-              <div class="line" style="height:70px"></div>
-            </div>
-            <div class="info">
-              <h4>Processing</h4>
-              <div class="meta">Feb 2, 2026 • 11:00 AM</div>
-              <p>Your order is being packed and checked.</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div>
-              <div class="dot done">🚚</div>
-              <div class="line" style="height:70px"></div>
-            </div>
-            <div class="info">
-              <h4>Out for Delivery</h4>
-              <div class="meta">Feb 3, 2026 • 8:00 AM</div>
-              <p>Driver: Juan Dela Cruz • Contact: 0917-123-4567</p>
-              <p><b>Estimated arrival:</b> Today, 2:00 PM</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div>
-              <div class="dot">✓</div>
-            </div>
-            <div class="info" style="opacity:.55">
-              <h4>Delivered</h4>
-              <div class="meta">Pending delivery</div>
-              <p>This will be updated once the order arrives.</p>
-            </div>
-          </div>
-
-        </div>
+        <div class="timeline"><div class="small">Loading delivery data...</div></div>
       </div>
     </main>
   </div>
-</body>
+  <script defer src="../assets/js/panel-data.js"></script></body>
 </html>

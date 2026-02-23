@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inventory View | Jazjo</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <style>
     .filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
     .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
@@ -30,7 +30,7 @@
         <a href="staff-orders.html">Orders</a>
         <a class="active" href="staff-inventory.html">Inventory View</a>
         <a href="staff-delivery.html">Delivery Updates</a>
-        <a href="index.html">Log Out</a>
+        <a href="../index.html">Log Out</a>
       </nav>
     </aside>
 
@@ -53,14 +53,10 @@
         <h3 style="margin:16px 0 0;font-weight:1000;">Stock List (Cases)</h3>
         <table>
           <thead><tr><th>Product</th><th>Stock (Cases)</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>Cola 1.5L</td><td>25</td><td><span class="status ok">In Stock</span></td></tr>
-            <tr><td>Iced Tea 1L</td><td>7</td><td><span class="status low">Low Stock</span></td></tr>
-            <tr><td>Energy Drink 250ml</td><td>0</td><td><span class="status out">Out of Stock</span></td></tr>
-          </tbody>
+          <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
         </table>
       </div>
     </main>
   </div>
-</body>
+  <script defer src="../assets/js/panel-data.js"></script></body>
 </html>

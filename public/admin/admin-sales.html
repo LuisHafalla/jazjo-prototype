@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sales Management | Jazjo</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <style>
     .row{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
     .pilltabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -43,7 +43,7 @@
         <a href="admin-customers.html">Customers</a>
         <a href="admin-rewards.html">Reward Program</a>
         <a href="admin-reports.html">Reports</a>
-        <a href="index.html">Log Out</a>
+        <a href="../index.html">Log Out</a>
       </nav>
     </aside>
 
@@ -126,14 +126,10 @@
           <thead>
             <tr><th>Period</th><th>Sales</th><th>Transactions</th><th>Best Seller</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Daily</td><td>₱ 12,450</td><td>18</td><td>Cola 1.5L</td></tr>
-            <tr><td>Weekly</td><td>₱ 68,230</td><td>102</td><td>Iced Tea 1L</td></tr>
-            <tr><td>Monthly</td><td>₱ 255,900</td><td>420</td><td>Water 1L</td></tr>
-          </tbody>
+          <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
         </table>
       </div>
     </main>
   </div>
-</body>
+  <script defer src="../assets/js/panel-data.js"></script></body>
 </html>

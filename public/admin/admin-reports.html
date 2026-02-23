@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Customers | Jazjo</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Reports | Jazjo</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <style>
+    .btn2{padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);background:#fff;font-weight:900;cursor:pointer}
+    .btn2:hover{background:rgba(15,23,42,.05)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -22,33 +27,36 @@
         <a href="admin-inventory.html">Inventory Management</a>
         <a href="admin-orders.html">Order Management</a>
         <a href="admin-delivery.html">Delivery Tracking</a>
-        <a class="active" href="admin-customers.html">Customers</a>
+        <a href="admin-customers.html">Customers</a>
         <a href="admin-rewards.html">Reward Program</a>
-        <a href="admin-reports.html">Reports</a>
-        <a href="index.html">Log Out</a>
+        <a class="active" href="admin-reports.html">Reports</a>
+        <a href="../index.html">Log Out</a>
       </nav>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <div>
-          <h1>Customers</h1>
-          <p>View customer list and order history overview.</p>
+          <h1>Reports</h1>
+          <p>Generate sales and inventory reports for monitoring and decision-making.</p>
         </div>
         <button class="btn back" onclick="history.back()">← Back</button>
       </div>
 
       <div class="card">
-        <h3 style="margin:0;font-weight:1000;">Customer List</h3>
+        <div class="row">
+          <button class="btn2">Export PDF</button>
+          <button class="btn2">Export Excel</button>
+          <button class="btn2">Print</button>
+        </div>
+
+        <h3 style="margin:16px 0 0;font-weight:1000;">Available Reports</h3>
         <table>
-          <thead><tr><th>Name</th><th>Email</th><th>Total Orders</th><th>Last Order</th></tr></thead>
-          <tbody>
-            <tr><td>Juan Dela Cruz</td><td>customer@jazjo.com</td><td>5</td><td>Feb 3, 2026</td></tr>
-            <tr><td>Maria Santos</td><td>maria@email.com</td><td>3</td><td>Feb 2, 2026</td></tr>
-          </tbody>
+          <thead><tr><th>Report Type</th><th>Coverage</th><th>Status</th></tr></thead>
+          <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
         </table>
       </div>
     </main>
   </div>
-</body>
+  <script defer src="../assets/js/panel-data.js"></script></body>
 </html>

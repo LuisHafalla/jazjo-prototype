@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inventory Management | Jazjo</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <style>
     .toprow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
     .search{flex:1;min-width:220px;padding:12px 14px;border-radius:999px;border:1px solid rgba(229,231,235,.9);font-weight:900}
@@ -41,7 +41,7 @@
         <a href="admin-customers.html">Customers</a>
         <a href="admin-rewards.html">Reward Program</a>
         <a href="admin-reports.html">Reports</a>
-        <a href="index.html">Log Out</a>
+        <a href="../index.html">Log Out</a>
       </nav>
     </aside>
 
@@ -66,11 +66,7 @@
           <thead>
             <tr><th>Product</th><th>Stock (Cases)</th><th>Status</th><th>Action</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Cola 1.5L</td><td>25</td><td>In Stock</td><td><button class="btn2">Edit</button></td></tr>
-            <tr><td>Orange Juice 1L</td><td>5</td><td>Low Stock</td><td><button class="btn2">Edit</button></td></tr>
-            <tr><td>Energy Drink 250ml</td><td>0</td><td>Out of Stock</td><td><button class="btn2">Edit</button></td></tr>
-          </tbody>
+          <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
         </table>
 
         <div class="forecast">
@@ -98,10 +94,7 @@
             </div>
             <table>
               <thead><tr><th>Product</th><th>Stock</th></tr></thead>
-              <tbody>
-                <tr><td>Orange Juice 1L</td><td>5 cases</td></tr>
-                <tr><td>Iced Tea 1L</td><td>7 cases</td></tr>
-              </tbody>
+              <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -109,5 +102,5 @@
       </div>
     </main>
   </div>
-</body>
+  <script defer src="../assets/js/panel-data.js"></script></body>
 </html>
