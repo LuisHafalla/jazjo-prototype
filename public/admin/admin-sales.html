@@ -14,7 +14,7 @@
       margin-top:12px;border:1px solid rgba(229,231,235,.9);border-radius:18px;padding:14px;background:#fff;
     }
     .bars{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:180px;margin-top:10px}
-    .bar{border-radius:14px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.28);position:relative}
+    .bar{border-radius:14px;background:rgba(22,163,74,.18);border:1px solid rgba(22,163,74,.28);position:relative;min-height:22px}
     .bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:12px;font-weight:900;color:#0f172a;margin-bottom:6px;white-space:nowrap}
     .bar small{position:absolute;top:100%;left:50%;transform:translateX(-50%);font-size:12px;font-weight:800;color:#64748b;margin-top:6px}
     .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
@@ -51,9 +51,9 @@
       <div class="topbar">
         <div>
           <h1>Sales Management</h1>
-          <p>View daily, weekly, monthly performance, best sellers, and transactions.</p>
+          <p>View live daily, weekly, and monthly performance from current orders.</p>
         </div>
-        <button class="btn back" onclick="history.back()">← Back</button>
+        <button class="btn back" onclick="history.back()">Back</button>
       </div>
 
       <div class="card">
@@ -69,29 +69,16 @@
           <div class="chart">
             <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
               <div>
-                <div style="font-weight:1000;font-size:16px;">Sales Trend (Last 7 Days)</div>
-                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:4px;">Clean UI chart (no libraries)</div>
+                <div id="salesChartTitle" style="font-weight:1000;font-size:16px;">Sales Trend (Last 7 Days)</div>
+                <div id="salesChartSub" style="color:#64748b;font-weight:650;font-size:13px;margin-top:4px;">Live order totals from the database</div>
               </div>
               <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                <span style="font-weight:900;color:#64748b;">Filter:</span>
-                <select style="padding:10px 12px;border-radius:999px;border:1px solid rgba(229,231,235,.9);font-weight:900;">
-                  <option>All</option>
-                  <option>Softdrinks</option>
-                  <option>Juice</option>
-                  <option>Water</option>
-                  <option>Tea</option>
-                </select>
+                <span class="badge green">Live Sales</span>
               </div>
             </div>
 
-            <div class="bars">
-              <div class="bar" style="height:40%"><span>₱4.2k</span><small>Mon</small></div>
-              <div class="bar" style="height:62%"><span>₱6.5k</span><small>Tue</small></div>
-              <div class="bar" style="height:55%"><span>₱5.7k</span><small>Wed</small></div>
-              <div class="bar" style="height:80%"><span>₱8.1k</span><small>Thu</small></div>
-              <div class="bar" style="height:70%"><span>₱7.2k</span><small>Fri</small></div>
-              <div class="bar" style="height:90%"><span>₱9.4k</span><small>Sat</small></div>
-              <div class="bar" style="height:65%"><span>₱6.8k</span><small>Sun</small></div>
+            <div id="salesBars" class="bars">
+              <div class="small">Loading chart...</div>
             </div>
           </div>
 
@@ -99,23 +86,23 @@
             <div class="kpis">
               <div class="kpi2">
                 <div class="label">Today Sales</div>
-                <div class="value">₱ 12,450</div>
-                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">+8% vs yesterday</div>
+                <div class="value">PHP 0</div>
+                <div id="todaySalesNote" style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">Live from active and completed orders</div>
               </div>
               <div class="kpi2">
                 <div class="label">Transactions</div>
-                <div class="value">18</div>
-                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">Avg. ₱691/order</div>
+                <div class="value">0</div>
+                <div id="transactionsNote" style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">Avg. PHP 0/order</div>
               </div>
               <div class="kpi2">
                 <div class="label">Best Seller</div>
-                <div class="value">Cola 1.5L</div>
-                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">42 units sold</div>
+                <div class="value">-</div>
+                <div id="bestSellerNote" style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">Most ordered item across sales</div>
               </div>
               <div class="kpi2">
                 <div class="label">Refunds</div>
-                <div class="value">₱ 0.00</div>
-                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">No issues today</div>
+                <div class="value">PHP 0</div>
+                <div style="color:#64748b;font-weight:650;font-size:13px;margin-top:6px;">No refund tracking yet</div>
               </div>
             </div>
           </div>
@@ -126,10 +113,11 @@
           <thead>
             <tr><th>Period</th><th>Sales</th><th>Transactions</th><th>Best Seller</th></tr>
           </thead>
-          <tbody><tr><td colspan="6">Loading...</td></tr></tbody>
+          <tbody><tr><td colspan="4">Loading...</td></tr></tbody>
         </table>
       </div>
     </main>
   </div>
-  <script defer src="../assets/js/panel-data.js"></script></body>
+  <script defer src="../assets/js/panel-data.js"></script>
+</body>
 </html>

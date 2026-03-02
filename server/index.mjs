@@ -343,11 +343,12 @@ async function getPanelInventory(){
 
 async function getPanelSales(){
   const orders = await listAllOrdersDetailed();
+  const salesOrders = orders.filter(o => o.status !== "Cancelled");
   const byDate = new Map();
   const byWeek = new Map();
   const byMonth = new Map();
   const productQty = new Map();
-  for(const o of orders){
+  for(const o of salesOrders){
     const d = new Date(o.createdAtRaw || o.createdAt);
     const dateKey = d.toISOString().slice(0,10);
     const monthKey = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
@@ -372,12 +373,35 @@ async function getPanelSales(){
   const latestDaily = [...byDate.entries()].sort((a,b)=>a[0] < b[0] ? 1 : -1)[0];
   const latestWeekly = [...byWeek.entries()].sort((a,b)=>a[0] < b[0] ? 1 : -1)[0];
   const latestMonthly = [...byMonth.entries()].sort((a,b)=>a[0] < b[0] ? 1 : -1)[0];
+  const avgOrderValue =
+    (latestDaily?.[1]?.transactions || 0) > 0
+      ? Number(latestDaily?.[1]?.sales || 0) / Number(latestDaily?.[1]?.transactions || 1)
+      : 0;
+  const last7Days = [];
+  const now = new Date();
+  for(let i = 6; i >= 0; i--){
+    const day = new Date(now);
+    day.setDate(now.getDate() - i);
+    const key = day.toISOString().slice(0,10);
+    const rec = byDate.get(key) || { sales: 0, transactions: 0 };
+    last7Days.push({
+      key,
+      label: day.toLocaleDateString("en-US", { weekday: "short" }),
+      sales: rec.sales,
+      transactions: rec.transactions
+    });
+  }
   return {
     kpis: {
       todaySales: latestDaily?.[1]?.sales || 0,
       transactions: latestDaily?.[1]?.transactions || 0,
       bestSeller,
-      refunds: 0
+      refunds: 0,
+      avgOrderValue
+    },
+    chart: {
+      title: "Sales Trend (Last 7 Days)",
+      points: last7Days
     },
     rows: [
       { period: "Daily", sales: latestDaily?.[1]?.sales || 0, transactions: latestDaily?.[1]?.transactions || 0, bestSeller },
@@ -443,6 +467,49 @@ async function supabasePasswordLogin(email, password){
   return data;
 }
 
+async function supabaseAdminRequest(pathname, { method="GET", body } = {}){
+  if(!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY){
+    throw new Error("Missing Supabase service role config in .env");
+  }
+  const res = await fetch(`${SUPABASE_URL}${pathname}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const text = await res.text();
+  let data = null;
+  try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+  if(!res.ok){
+    throw new Error(data?.msg || data?.message || data?.error_description || data?.error || `Supabase admin error ${res.status}`);
+  }
+  return data;
+}
+
+async function supabaseAdminCreateUser({ email, password, fullName }){
+  return await supabaseAdminRequest("/auth/v1/admin/users", {
+    method: "POST",
+    body: {
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: {
+        full_name: fullName
+      }
+    }
+  });
+}
+
+async function supabaseAdminDeleteUser(userId){
+  if(!userId) return;
+  await supabaseAdminRequest(`/auth/v1/admin/users/${encodeURIComponent(userId)}`, {
+    method: "DELETE"
+  });
+}
+
 async function supabaseAuthUser(accessToken){
   if(!SUPABASE_URL || !SUPABASE_ANON_KEY){
     throw new Error("Missing Supabase frontend keys in .env");
@@ -470,6 +537,88 @@ async function getProfileByUserId(userId){
   const q = `/rest/v1/profiles?select=user_id,email,role,full_name,contact,address,created_at,updated_at&user_id=eq.${encodeURIComponent(userId)}&limit=1`;
   const rows = await supabaseRequest(q, { serviceRole: true });
   return rows?.[0] || null;
+}
+
+async function upsertCustomerProfile({ userId, email, fullName, contact, address }){
+  const existing = await getProfileByUserId(userId);
+  const payload = {
+    user_id: userId,
+    email,
+    role: "customer",
+    full_name: fullName,
+    contact,
+    address
+  };
+  if(existing){
+    const rows = await supabaseRequest(`/rest/v1/profiles?user_id=eq.${encodeURIComponent(userId)}`, {
+      method: "PATCH",
+      serviceRole: true,
+      headers: { Prefer: "return=representation" },
+      body: payload
+    });
+    return rows?.[0] || null;
+  }
+  const rows = await supabaseRequest("/rest/v1/profiles", {
+    method: "POST",
+    serviceRole: true,
+    headers: { Prefer: "return=representation" },
+    body: [payload]
+  });
+  return rows?.[0] || null;
+}
+
+async function registerCustomerAccount(payload){
+  const email = String(payload.email || "").trim().toLowerCase();
+  const password = String(payload.password || "");
+  const fullName = String(payload.fullName || payload.full_name || "").trim();
+  const contact = String(payload.contact || "").trim();
+  const address = String(payload.address || "").trim();
+
+  if(!email || !password || !fullName || !contact || !address){
+    const err = new Error("fullName, email, contact, address, and password are required");
+    err.status = 400;
+    throw err;
+  }
+  if(password.length < 8){
+    const err = new Error("Password must be at least 8 characters.");
+    err.status = 400;
+    throw err;
+  }
+
+  const existing = await getProfileByEmail(email);
+  if(existing){
+    const err = new Error("An account with this email already exists.");
+    err.status = 409;
+    throw err;
+  }
+
+  const created = await supabaseAdminCreateUser({ email, password, fullName });
+  const userId = created?.id || created?.user?.id || "";
+  if(!userId){
+    throw new Error("Supabase did not return the new user id.");
+  }
+
+  let profile = null;
+  try{
+    profile = await upsertCustomerProfile({ userId, email, fullName, contact, address });
+  }catch(err){
+    await supabaseAdminDeleteUser(userId).catch((_cleanupErr) => {});
+    throw err;
+  }
+
+  const session = await supabasePasswordLogin(email, password);
+  return {
+    user: {
+      email: profile?.email || email,
+      role: profile?.role || "customer",
+      full_name: profile?.full_name || fullName
+    },
+    session: {
+      access_token: session.access_token,
+      refresh_token: session.refresh_token,
+      expires_in: session.expires_in
+    }
+  };
 }
 
 async function requireAuth(req, allowedRoles = []){
@@ -1002,6 +1151,13 @@ async function handleApi(req, res, url){
         expires_in: session.expires_in
       }
     });
+    return true;
+  }
+
+  if(req.method === "POST" && url.pathname === "/api/auth/register"){
+    const payload = await readJson(req);
+    const result = await registerCustomerAccount(payload);
+    sendJson(res, 201, result);
     return true;
   }
 

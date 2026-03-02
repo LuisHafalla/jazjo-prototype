@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jazjo Beverage | Customer Registration</title>
+
+  <style>
+    :root{
+      --green:#16a34a;
+      --greenDark:#0b7a33;
+      --text:#0f172a;
+      --muted:#64748b;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --line:#e5e7eb;
+      --shadow: 0 12px 30px rgba(15,23,42,.10);
+      --shadow2: 0 10px 22px rgba(15,23,42,.08);
+      --radius: 18px;
+      --radius2: 22px;
+      --navH: 76px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    button,input,textarea{font-family:inherit}
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      height:var(--navH);
+      background:rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(229,231,235,.8);
+    }
+    .nav-inner{
+      max-width:1200px;
+      height:100%;
+      margin:0 auto;
+      padding:0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background:linear-gradient(135deg, var(--green), #22c55e);
+      display:grid;place-items:center;
+      box-shadow: 0 10px 18px rgba(22,163,74,.22);
+      flex:0 0 auto;
+    }
+    .logo svg{width:20px;height:20px;fill:#fff}
+    .brand span{font-size:18px}
+
+    .nav-links{
+      display:flex;align-items:center;gap:22px;
+      color:#475569;font-weight:600;font-size:14.5px;
+    }
+    .nav-links a{padding:10px 6px;border-radius:10px}
+    .nav-links a:hover{background:rgba(15,23,42,.05);color:#111827}
+
+    .btn{
+      border:0;
+      padding:12px 18px;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .08s ease, filter .2s ease, background .2s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{background:var(--green);color:#fff;box-shadow:0 12px 24px rgba(22,163,74,.18)}
+    .btn-primary:hover{filter:brightness(.95)}
+    .btn-ghost{background:rgba(15,23,42,.06);color:#0f172a}
+    .btn-ghost:hover{background:rgba(15,23,42,.10)}
+
+    .page{
+      min-height: calc(100vh - var(--navH));
+      display:grid;
+      place-items:center;
+      padding: 26px 18px 60px;
+    }
+    .card{
+      width:min(1040px, 100%);
+      background:var(--card);
+      border:1px solid rgba(229,231,235,.9);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .left{
+      padding: 34px 30px;
+      background:
+        linear-gradient(90deg, rgba(2,6,23,.65) 0%, rgba(2,6,23,.22) 100%),
+        url("https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=2000&q=70");
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:28px;
+      min-height:640px;
+    }
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 12px;border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.22);
+      font-weight:700;font-size:13px;
+      width:max-content;
+      backdrop-filter: blur(6px);
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:#86efac;box-shadow:0 0 0 6px rgba(134,239,172,.18)}
+    .left h1{font-size:42px;line-height:1.05;margin:14px 0 12px}
+    .left p{max-width:46ch;color:rgba(255,255,255,.9);font-size:15.5px;line-height:1.7;margin:0}
+    .small{
+      color:rgba(255,255,255,.88);
+      font-size:13.5px;line-height:1.7;
+      padding:14px 16px;border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+    }
+
+    .right{padding:34px 30px}
+    .right h2{margin:4px 0 6px;font-size:28px}
+    .sub{margin:0 0 20px;color:var(--muted);font-size:14px;line-height:1.6}
+    .grid{display:grid;gap:14px}
+    .grid2{grid-template-columns:1fr 1fr}
+    .field{display:grid;gap:8px}
+    label{font-size:13px;font-weight:700;color:#334155}
+    .input, .textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:14px;
+      padding:13px 14px;
+      outline:none;
+      font-size:14px;color:var(--text);
+      box-shadow: var(--shadow2);
+    }
+    .input:focus, .textarea:focus{
+      border-color:#86efac;
+      box-shadow: 0 0 0 4px rgba(134,239,172,.18), var(--shadow2);
+    }
+    .textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+    .actions{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .msg{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:#fef2f2;
+      color:#991b1b;
+      border:1px solid #fecaca;
+      font-size:13.5px;
+    }
+    .back{
+      display:inline-flex;align-items:center;gap:8px;
+      color:#475569;font-weight:700;font-size:14px;margin-top:18px;
+    }
+
+    @media (max-width: 920px){
+      .card{grid-template-columns:1fr}
+      .left{min-height:320px}
+      .grid2{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Jazjo Beverage Home">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.8 3.4L12 11.1 5.2 7.7 12 4.3Zm-7 5.3 6 3V20l-6-3V9.6Zm14 0V17l-6 3v-7.5l6-3Z"/>
+          </svg>
+        </div>
+        <span>Jazjo Beverage</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#about">About Us</a>
+        <a href="index.html#products">Products</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div>
+        <a class="btn btn-ghost" href="login.html">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="card">
+      <section class="left">
+        <div>
+          <div class="tag"><span class="dot"></span> Customer Account</div>
+          <h1>Create your Jazjo account</h1>
+          <p>
+            Register as a customer to place beverage orders, manage delivery details,
+            and track your purchases from one dashboard.
+          </p>
+        </div>
+        <div class="small">
+          Customer accounts are created with the customer role only. Admin and staff access
+          still need to be provisioned separately.
+        </div>
+      </section>
+
+      <section class="right">
+        <h2>Register</h2>
+        <p class="sub">Enter your customer details to create an account and start ordering.</p>
+
+        <form id="registerForm" autocomplete="on" class="grid">
+          <div class="grid grid2">
+            <div class="field">
+              <label for="fullName">Full Name</label>
+              <input class="input" id="fullName" name="fullName" type="text" placeholder="Juan Dela Cruz" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="grid grid2">
+            <div class="field">
+              <label for="contact">Contact Number</label>
+              <input class="input" id="contact" name="contact" type="text" placeholder="09XXXXXXXXX" required />
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <input class="input" id="password" name="password" type="password" placeholder="Minimum 8 characters" minlength="8" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="address">Delivery Address</label>
+            <textarea class="textarea" id="address" name="address" placeholder="House number, street, barangay, city" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input class="input" id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-enter your password" minlength="8" required />
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">Create Account</button>
+            <a class="btn btn-ghost" href="login.html">Back to Login</a>
+          </div>
+
+          <div class="msg" id="msg"></div>
+          <p class="sub" style="margin:0;">
+            Already have an account?
+            <a href="login.html" style="color:var(--green);font-weight:800;">Sign in here</a>
+          </p>
+
+          <a class="back" href="index.html">Back to Home</a>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const msg = document.getElementById("msg");
+
+    function showError(text) {
+      msg.style.display = "block";
+      msg.textContent = text;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.style.display = "none";
+      msg.textContent = "";
+
+      const fullName = (document.getElementById("fullName").value || "").trim();
+      const email = (document.getElementById("email").value || "").trim().toLowerCase();
+      const contact = (document.getElementById("contact").value || "").trim();
+      const address = (document.getElementById("address").value || "").trim();
+      const password = document.getElementById("password").value || "";
+      const confirmPassword = document.getElementById("confirmPassword").value || "";
+
+      if (password !== confirmPassword) {
+        showError("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fullName, email, contact, address, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showError(data.error || "Unable to create account.");
+          return;
+        }
+
+        localStorage.setItem("jazjo_user", data.user.email);
+        localStorage.setItem("jazjo_role", data.user.role || "customer");
+        if (data.session?.access_token) {
+          sessionStorage.setItem("jazjo_access_token", data.session.access_token);
+          localStorage.removeItem("jazjo_access_token");
+        }
+
+        window.location.href = "customer/customer-dashboard.html";
+      } catch (err) {
+        showError(`Registration failed: ${err.message}`);
+      }
+    });
+  </script>
+</body>
+</html>

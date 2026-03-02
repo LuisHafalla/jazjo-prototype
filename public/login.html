@@ -334,10 +334,6 @@
           </div>
 
           <div class="row">
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
-              <input type="checkbox" id="remember" />
-              Remember me
-            </label>
             <a href="#" onclick="return false;" title="Not included in prototype">Forgot password?</a>
           </div>
 
@@ -347,6 +343,10 @@
           </div>
 
           <div class="msg" id="msg"></div>
+          <p class="sub" style="margin-top:16px;">
+            New customer?
+            <a href="register.html" style="color:var(--green);font-weight:800;">Create an account</a>
+          </p>
 
           <a class="back" href="index.html">← Back to Home</a>
         </form>
@@ -397,14 +397,10 @@
           return;
         }
 
-        const remember = document.getElementById("remember").checked;
         localStorage.setItem("jazjo_user", data.user.email);
         localStorage.setItem("jazjo_role", data.user.role || "customer");
         if (data.session?.access_token) {
           sessionStorage.setItem("jazjo_access_token", data.session.access_token);
-          if (remember) localStorage.setItem("jazjo_access_token", data.session.access_token);
-        }
-        if (!remember) {
           localStorage.removeItem("jazjo_access_token");
         }
 
@@ -414,7 +410,7 @@
       }
     });
 
-    // Prefill email if remembered
+    // Prefill email from the last successful login
     const saved = localStorage.getItem("jazjo_user");
     if (saved) document.getElementById("email").value = saved;
   </script>

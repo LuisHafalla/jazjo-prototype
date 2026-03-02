@@ -9,7 +9,8 @@ const LS = {
   cart: "jazjo_cart_v1",
   orders: "jazjo_orders_v1",
   profile: "jazjo_customer_profile_v1",
-  rewards: "jazjo_rewards_v1"
+  rewards: "jazjo_rewards_v1",
+  favorites: "jazjo_saved_items_v1"
 };
 
 const API_BASE = location.protocol === "file:" ? "http://localhost:3000" : "";
@@ -29,7 +30,7 @@ function save(key, value){
 }
 
 function qs(sel){ return document.querySelector(sel); }
-function qsa(sel){ return [...document.querySelectorAll(sel)]; }
+function qsa(sel, root=document){ return [...root.querySelectorAll(sel)]; }
 
 function apiUrl(path){
   return `${API_BASE}${path}`;
@@ -172,6 +173,16 @@ function getCart(){ return load(LS.cart, []); }
 function setCart(items){ save(LS.cart, items); }
 function getOrders(){ return (load(LS.orders, []) || []).map(normalizeOrderForUI); }
 function setOrders(list){ save(LS.orders, (list || []).map(normalizeOrderForUI)); }
+function favoritesKey(){ return `${LS.favorites}:${getCurrentCustomerEmail().toLowerCase()}`; }
+function getFavorites(){ return load(favoritesKey(), []); }
+function setFavorites(list){ save(favoritesKey(), [...new Set(list || [])]); }
+function isFavorite(productId){ return getFavorites().includes(productId); }
+function toggleFavorite(productId){
+  const next = new Set(getFavorites());
+  if(next.has(productId)) next.delete(productId);
+  else next.add(productId);
+  setFavorites([...next]);
+}
 
 async function syncProductsFromApi(){
   const data = await apiFetch("/api/products");
@@ -194,6 +205,84 @@ async function createOrderApi(payload){
   return await apiFetch("/api/orders", {
     method: "POST",
     body: JSON.stringify(payload)
+  });
+}
+
+function getFavoriteProducts(products = getProducts()){
+  const favorites = new Set(getFavorites());
+  return products.filter(p => favorites.has(p.id));
+}
+
+function getRecommendedProducts(products = getProducts(), orders = getOrders(), limit = 6){
+  const counts = new Map();
+  for(const order of orders){
+    for(const item of order.items || []){
+      const id = item.productId;
+      if(!id) continue;
+      counts.set(id, (counts.get(id) || 0) + Number(item.qty || 0));
+    }
+  }
+  const ordered = [...counts.entries()]
+    .sort((a,b)=>b[1]-a[1])
+    .map(([id]) => products.find(p => p.id === id))
+    .filter(Boolean);
+  if(ordered.length >= limit) return ordered.slice(0, limit);
+
+  const favoriteIds = new Set(getFavorites());
+  const extra = products.filter(p => favoriteIds.has(p.id) && !ordered.some(o => o.id === p.id));
+  const merged = [...ordered, ...extra];
+  if(merged.length >= limit) return merged.slice(0, limit);
+
+  return [
+    ...merged,
+    ...products
+      .filter(p => p.stockCases > 0 && !merged.some(m => m.id === p.id))
+      .slice(0, Math.max(0, limit - merged.length))
+  ];
+}
+
+function productCardMarkup(p, { favorite=false, compact=false } = {}){
+  const stockLabel = p.stockCases <= 0 ? `<span class="badge red">Out of Stock</span>` :
+                     p.stockCases <= 10 ? `<span class="badge yellow">Low Stock</span>` :
+                     `<span class="badge green">In Stock</span>`;
+  const favText = favorite ? "Saved" : "Save";
+  const disabled = p.stockCases <= 0 ? "disabled style='opacity:.6;cursor:not-allowed'" : "";
+  const bodyClass = compact ? "productCard productCard-compact" : "productCard";
+  return `
+    <div class="${bodyClass}">
+      <div class="productMedia">
+        <img src="${p.img}" alt="${p.name}" />
+      </div>
+      <div class="productBody">
+        <div class="row" style="justify-content:space-between;align-items:flex-start">
+          <p class="productName">${p.name}</p>
+          <button class="btn back favoriteBtn ${favorite ? "is-favorite" : ""}" type="button" data-favorite="${p.id}">${favText}</button>
+        </div>
+        <p class="productMeta">${p.category} - ${p.unit} - ${stockLabel}</p>
+        <p class="productPrice">${money(p.price)}</p>
+        <div class="productActions">
+          <button class="btn" data-add="${p.id}" ${disabled}>Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function bindProductCardActions(scope = document){
+  qsa("[data-add]", scope).forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      addToCart(btn.dataset.add, 1);
+      setCartBadge();
+      btn.textContent = "Added";
+      setTimeout(()=>btn.textContent="Add to Cart", 900);
+    });
+  });
+  qsa("[data-favorite]", scope).forEach(btn => {
+    btn.addEventListener("click", ()=>{
+      toggleFavorite(btn.dataset.favorite);
+      const handler = window.__jazjoRefreshProducts;
+      if(typeof handler === "function") handler();
+    });
   });
 }
 
@@ -240,8 +329,13 @@ function renderShop(){
   if(!grid) return;
 
   let products = getProducts();
+  let latestOrders = getOrders();
   const search = qs("#search");
   const cat = qs("#category");
+  const favoritesWrap = qs("#favoritesGrid");
+  const recommendationsWrap = qs("#recommendGrid");
+  const favoritesCard = qs("#favoritesCard");
+  const recommendationsCard = qs("#recommendCard");
 
   const draw = ()=>{
     const categories = ["All", ...new Set(products.map(p=>p.category))];
@@ -256,38 +350,28 @@ function renderShop(){
       return okTerm && okCat;
     });
 
-    grid.innerHTML = filtered.map(p=>{
-      const stockLabel = p.stockCases <= 0 ? `<span class="badge red">Out of Stock</span>` :
-                         p.stockCases <= 10 ? `<span class="badge yellow">Low Stock</span>` :
-                         `<span class="badge green">In Stock</span>`;
-      return `
-        <div class="productCard">
-          <div class="productMedia">
-            <img src="${p.img}" alt="${p.name}" />
-          </div>
-          <div class="productBody">
-            <p class="productName">${p.name}</p>
-            <p class="productMeta">${p.category} - ${p.unit} - ${stockLabel}</p>
-            <p class="productPrice">${money(p.price)}</p>
-            <div class="productActions">
-              <button class="btn" data-add="${p.id}" ${p.stockCases<=0 ? "disabled style='opacity:.6;cursor:not-allowed'" : ""}>Add to Cart</button>
-              <a class="btn back" href="customer-shop.html" title="Refresh" style="padding:11px 12px;">R</a>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join("");
+    grid.innerHTML = filtered.map(p => productCardMarkup(p, { favorite: isFavorite(p.id) })).join("");
 
-    qsa("[data-add]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        addToCart(btn.dataset.add, 1);
-        setCartBadge();
-        btn.textContent = "Added";
-        setTimeout(()=>btn.textContent="Add to Cart", 900);
-      });
-    });
+    if(favoritesWrap && favoritesCard){
+      const favoriteProducts = getFavoriteProducts(products);
+      favoritesCard.style.display = "";
+      favoritesWrap.innerHTML = favoriteProducts.length
+        ? favoriteProducts.slice(0, 6).map(p => productCardMarkup(p, { favorite: true, compact: true })).join("")
+        : `<div class="small">Save products here so you can reorder quickly without browsing the whole catalog.</div>`;
+    }
+
+    if(recommendationsWrap && recommendationsCard){
+      const recommendedProducts = getRecommendedProducts(products, latestOrders, 6);
+      recommendationsCard.style.display = "";
+      recommendationsWrap.innerHTML = recommendedProducts.length
+        ? recommendedProducts.map(p => productCardMarkup(p, { favorite: isFavorite(p.id), compact: true })).join("")
+        : `<div class="small">Recommendations will appear after you place a few orders.</div>`;
+    }
+
+    bindProductCardActions();
   };
 
+  window.__jazjoRefreshProducts = draw;
   search.addEventListener("input", draw);
   cat.addEventListener("change", draw);
   draw();
@@ -297,6 +381,47 @@ function renderShop(){
       console.error(err);
       grid.innerHTML = `<div class="card"><div class="small">Failed to load products from database: ${err.message}</div></div>`;
     });
+  fetchOrdersFromApi()
+    .then(orders => { latestOrders = orders; setOrders(orders); draw(); })
+    .catch(err => console.error(err));
+}
+
+function renderCustomerDashboard(){
+  initPublicNav();
+  const favoritesWrap = qs("#dashboardFavorites");
+  const recommendationsWrap = qs("#dashboardRecommendations");
+  if(!favoritesWrap && !recommendationsWrap) return;
+
+  let products = getProducts();
+  let orders = getOrders();
+
+  const draw = ()=>{
+    if(favoritesWrap){
+      const favoriteProducts = getFavoriteProducts(products);
+      favoritesWrap.innerHTML = favoriteProducts.length
+        ? favoriteProducts.slice(0, 4).map(p => productCardMarkup(p, { favorite: true, compact: true })).join("")
+        : `<div class="card"><div class="small">No saved items yet. Save products from the Shop page for faster reordering.</div></div>`;
+    }
+    if(recommendationsWrap){
+      const recommendedProducts = getRecommendedProducts(products, orders, 4);
+      recommendationsWrap.innerHTML = recommendedProducts.length
+        ? recommendedProducts.map(p => productCardMarkup(p, { favorite: isFavorite(p.id), compact: true })).join("")
+        : `<div class="card"><div class="small">Recommendations will show up after repeat purchases.</div></div>`;
+    }
+    bindProductCardActions();
+  };
+
+  window.__jazjoRefreshProducts = draw;
+  Promise.allSettled([syncProductsFromApi(), fetchOrdersFromApi()])
+    .then(results => {
+      if(results[0].status === "fulfilled") products = results[0].value;
+      if(results[1].status === "fulfilled"){
+        orders = results[1].value;
+        setOrders(orders);
+      }
+      draw();
+    });
+  draw();
 }
 
 function renderCart(){
@@ -667,6 +792,7 @@ function initProductUploader(){
 
 document.addEventListener("DOMContentLoaded", ()=>{
   initPublicNav();
+  if(qs("#dashboardFavorites") || qs("#dashboardRecommendations")) renderCustomerDashboard();
   if(qs("#productGrid")) renderShop();
   if(qs("#cartList")) renderCart();
   if(qs("#ordersWrap")) renderOrders();

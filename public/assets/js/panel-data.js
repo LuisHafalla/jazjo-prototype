@@ -168,6 +168,33 @@
     if (kpis[1]) kpis[1].textContent = String(data.kpis?.transactions || 0);
     if (kpis[2]) kpis[2].textContent = data.kpis?.bestSeller || "-";
     if (kpis[3]) kpis[3].textContent = money(data.kpis?.refunds || 0);
+    const todaySalesNote = document.querySelector("#todaySalesNote");
+    const transactionsNote = document.querySelector("#transactionsNote");
+    const bestSellerNote = document.querySelector("#bestSellerNote");
+    if (todaySalesNote) todaySalesNote.textContent = "Live from active and completed orders";
+    if (transactionsNote) transactionsNote.textContent = `Avg. ${money(data.kpis?.avgOrderValue || 0)}/order`;
+    if (bestSellerNote) bestSellerNote.textContent = (data.kpis?.bestSeller && data.kpis.bestSeller !== "-")
+      ? `${esc(data.kpis.bestSeller)} is leading current sales`
+      : "Waiting for sales data";
+
+    const chartTitle = document.querySelector("#salesChartTitle");
+    const chartSub = document.querySelector("#salesChartSub");
+    const bars = document.querySelector("#salesBars");
+    const points = data.chart?.points || [];
+    const peak = Math.max(...points.map(p => Number(p.sales || 0)), 0);
+    if (chartTitle) chartTitle.textContent = data.chart?.title || "Sales Trend";
+    if (chartSub) chartSub.textContent = peak > 0 ? "Last 7 calendar days of sales" : "No sales recorded yet";
+    if (bars) {
+      bars.innerHTML = points.length ? points.map(point => {
+        const height = peak > 0 ? Math.max(12, Math.round((Number(point.sales || 0) / peak) * 100)) : 12;
+        return `
+          <div class="bar" style="height:${height}%">
+            <span>${money(point.sales || 0)}</span>
+            <small>${esc(point.label || "-")}</small>
+          </div>
+        `;
+      }).join("") : `<div class="small">No sales data yet.</div>`;
+    }
 
     const tbody = document.querySelector("tbody");
     if (tbody) {
